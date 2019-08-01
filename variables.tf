@@ -12,7 +12,7 @@ variable "location" {
 
 variable "custom_policy" {
   description = "A custom policy to create, will overwrite policy_definition_id. Both cannot be configured at same time."
-  type        = object({ display_name = string, mode = string, metadata = string, policy_rule = string, parameters = string })
+  type        = object({ display_name = string, mode = string, management_group_id = string, metadata = string, policy_rule = string, parameters = string })
   default     = null
 }
 
