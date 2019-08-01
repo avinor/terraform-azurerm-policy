@@ -17,7 +17,7 @@ To use the build-in policy to restrict resource locations to specific regions:
 ```terraform
 module {
     source = "avinor/policy/azurerm"
-    version = "1.0.0"
+    version = "1.1.0"
 }
 
 inputs {
@@ -49,7 +49,7 @@ If the build-in policies do not cover use case it is also possible to add a cust
 ```terraform
 module {
     source = "avinor/policy/azurerm"
-    version = "1.0.0"
+    version = "1.1.0"
 }
 
 inputs {
@@ -60,6 +60,7 @@ inputs {
     custom_policy = {
         display_name = "Restrict location"
         mode = "All"
+        management_group_id = null
 
         metadata = <<METADATA
             {
