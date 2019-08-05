@@ -30,7 +30,12 @@ resource "azurerm_policy_assignment" "policy" {
   policy_definition_id = local.definition_id
   description          = var.description
   display_name         = var.assignments[count.index].display_name
+  location             = var.location
 
+  identity {
+    type = var.create_identity ? "SystemAssigned" : "None"
+  }
+  
   not_scopes = var.assignments[count.index].not_scopes
   parameters = var.assignments[count.index].parameters
 }
