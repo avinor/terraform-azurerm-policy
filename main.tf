@@ -21,6 +21,13 @@ resource "azurerm_policy_definition" "policy" {
   metadata    = var.custom_policy.metadata
   policy_rule = var.custom_policy.policy_rule
   parameters  = var.custom_policy.parameters
+
+  lifecycle {
+    # Ignore metadata changes as Azure adds additional metadata module does not handle
+    ignore_changes = [
+      "metadata",
+    ]
+  }
 }
 
 resource "azurerm_policy_assignment" "policy" {
