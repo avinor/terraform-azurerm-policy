@@ -42,7 +42,7 @@ resource "azurerm_policy_assignment" "policy" {
   identity {
     type = var.create_identity ? "SystemAssigned" : "None"
   }
-  
+
   not_scopes = var.assignments[count.index].not_scopes
   parameters = var.assignments[count.index].parameters
 }
