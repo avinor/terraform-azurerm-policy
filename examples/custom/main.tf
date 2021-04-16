@@ -1,13 +1,12 @@
 module "custom" {
-    source = "avinor/policy/azurerm"
-    version = "1.1.0"
+    source = "../../"
 
     name = "restrict-location"
     description = "Restrict location that its allowed to create resources in."
     location = "westeurope"
-    management_group_id = null
 
     custom_policy = {
+        management_group_name = ""
         display_name = "Restrict location"
         mode = "All"
 

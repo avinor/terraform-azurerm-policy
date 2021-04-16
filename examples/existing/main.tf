@@ -1,6 +1,5 @@
 module "existing" {
-    source = "avinor/policy/azurerm"
-    version = "1.1.0"
+    source = "../../"
 
     name = "restrict-location"
     description = "Restrict location that its allowed to create resources in."

@@ -60,7 +60,7 @@ inputs {
     custom_policy = {
         display_name = "Restrict location"
         mode = "All"
-        management_group_id = null
+        management_group_name = ""
 
         metadata = <<METADATA
             {
