@@ -1,23 +1,23 @@
 module "custom" {
     source = "../../"
 
-    name = "restrict-location"
-    description = "Restrict location that its allowed to create resources in."
-    location = "westeurope"
+  name                = "restrict-location"
+  description         = "Restrict location that its allowed to create resources in."
+  location            = "westeurope"
+  management_group_id = null
 
-    custom_policy = {
-        management_group_name = ""
-        display_name = "Restrict location"
-        mode = "All"
+  custom_policy = {
+    display_name = "Restrict location"
+    mode         = "All"
 
-        metadata = <<METADATA
+    metadata = <<METADATA
             {
             "category": "General"
             }
         METADATA
 
-        policy_rule = <<POLICY_RULE
-            {
+    policy_rule = <<POLICY_RULE
+        {
             "if": {
             "not": {
                 "field": "location",
@@ -30,8 +30,8 @@ module "custom" {
         }
         POLICY_RULE
 
-        parameters = <<PARAMETERS
-            {
+    parameters = <<PARAMETERS
+        {
             "allowedLocations": {
             "type": "Array",
             "metadata": {
@@ -42,20 +42,20 @@ module "custom" {
             }
         }
         PARAMETERS
-    }
+  }
 
-    assignments = [
-        {
-            display_name = "Restrict resource location"
-            scope = "/SCOPE"
-            not_scopes = []
-            parameters = <<PARAMETERS
+  assignments = [
+    {
+      display_name = "Restrict resource location"
+      scope        = "/SCOPE"
+      not_scopes   = []
+      parameters   = <<PARAMETERS
                 {
                     "allowedLocations": {
                         "value": [ "West Europe" ]
                     }
                 }
             PARAMETERS
-        },
-    ]
+    },
+  ]
 }
