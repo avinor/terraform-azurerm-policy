@@ -1,10 +1,14 @@
 terraform {
-  required_version = ">= 0.12.26"
+  required_version = ">= 0.13"
   required_providers {
     azurerm = {
-      version = "~> 1.44.0"
+      source  = "hashicorp/azurerm"
+      version = "~> 2.55.0"
     }
   }
+}
+provider "azurerm" {
+  features {}
 }
 
 locals {
@@ -12,13 +16,13 @@ locals {
 }
 
 resource "azurerm_policy_definition" "policy" {
-  count               = var.custom_policy != null ? 1 : 0
-  name                = var.name
-  policy_type         = "Custom"
-  mode                = var.custom_policy.mode
-  display_name        = var.custom_policy.display_name
-  description         = var.description
-  management_group_id = var.custom_policy.management_group_id
+  count                 = var.custom_policy != null ? 1 : 0
+  name                  = var.name
+  policy_type           = "Custom"
+  mode                  = var.custom_policy.mode
+  display_name          = var.custom_policy.display_name
+  description           = var.description
+  management_group_name = var.custom_policy.management_group_name
 
   metadata    = var.custom_policy.metadata
   policy_rule = var.custom_policy.policy_rule

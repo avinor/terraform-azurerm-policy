@@ -8,5 +8,5 @@
 # .tfvars files
 *.tfvars
 
-# Intelij IDEA
 .idea
+*.iml
