@@ -1,14 +1,15 @@
 module "custom" {
   source = "../../"
 
-  name                = "restrict-location"
-  description         = "Restrict location that its allowed to create resources in."
-  location            = "westeurope"
-  management_group_id = null
+  name                  = "restrict-location"
+  description           = "Restrict location that its allowed to create resources in."
+  location              = "westeurope"
 
   custom_policy = {
     display_name = "Restrict location"
     mode         = "All"
+
+    management_group_name = null
 
     metadata = <<METADATA
             {

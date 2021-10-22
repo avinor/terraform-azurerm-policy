@@ -21,18 +21,18 @@ module {
 }
 
 inputs {
-    name = "restrict-location"
+    name        = "restrict-location"
     description = "Restrict location that its allowed to create resources in."
-    location = "westeurope"
+    location    = "westeurope"
 
     policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c"
 
     assignments = [
         {
             display_name = "Restrict resource location"
-            scope = "/SCOPE"
-            not_scopes = []
-            parameters = <<PARAMETERS
+            scope        = "/SCOPE"
+            not_scopes   = []
+            parameters   = <<PARAMETERS
                 {
                     "listOfAllowedLocations": {
                         "value": [ "West Europe" ]
@@ -58,8 +58,8 @@ inputs {
     location = "westeurope"
 
     custom_policy = {
-        display_name = "Restrict location"
-        mode = "All"
+        display_name          = "Restrict location"
+        mode                  = "All"
         management_group_name = ""
 
         metadata = <<METADATA
@@ -99,9 +99,9 @@ inputs {
     assignments = [
         {
             display_name = "Restrict resource location"
-            scope = "/SCOPE"
-            not_scopes = []
-            parameters = <<PARAMETERS
+            scope        = "/SCOPE"
+            not_scopes   = []
+            parameters   = <<PARAMETERS
                 {
                     "allowedLocations": {
                         "value": [ "West Europe" ]
