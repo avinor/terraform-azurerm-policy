@@ -1,5 +1,5 @@
 module "existing" {
-    source = "../../"
+  source = "../../"
 
   name        = "restrict-location"
   description = "Restrict location that its allowed to create resources in."

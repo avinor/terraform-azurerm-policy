@@ -1,5 +1,5 @@
 module "custom" {
-    source = "../../"
+  source = "../../"
 
   name                = "restrict-location"
   description         = "Restrict location that its allowed to create resources in."
@@ -12,20 +12,20 @@ module "custom" {
 
     metadata = <<METADATA
             {
-            "category": "General"
+                "category": "General"
             }
         METADATA
 
     policy_rule = <<POLICY_RULE
         {
             "if": {
-            "not": {
-                "field": "location",
-                "in": "[parameters('allowedLocations')]"
-            }
+                "not": {
+                    "field": "location",
+                    "in": "[parameters('allowedLocations')]"
+                }
             },
             "then": {
-            "effect": "audit"
+                "effect": "audit"
             }
         }
         POLICY_RULE
@@ -33,12 +33,12 @@ module "custom" {
     parameters = <<PARAMETERS
         {
             "allowedLocations": {
-            "type": "Array",
-            "metadata": {
-                "description": "The list of allowed locations for resources.",
-                "displayName": "Allowed locations",
-                "strongType": "location"
-            }
+                "type": "Array",
+                "metadata": {
+                    "description": "The list of allowed locations for resources.",
+                    "displayName": "Allowed locations",
+                    "strongType": "location"
+                }
             }
         }
         PARAMETERS
