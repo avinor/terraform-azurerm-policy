@@ -19,12 +19,12 @@ variable "create_identity" {
 variable "custom_policy" {
   description = "A custom policy to create, will overwrite policy_definition_id. Both cannot be configured at same time."
   type = object({
-    display_name          = string
-    mode                  = string
-    management_group_name = string
-    metadata              = string
-    policy_rule           = string
-    parameters            = string
+    display_name        = string/home/yngve/src/gitazure/ipt/avarn-avvik-integration
+    mode                = string
+    management_group_id = string
+    metadata            = string
+    policy_rule         = string
+    parameters          = string
   })
   default = null
 }
@@ -34,12 +34,47 @@ variable "policy_definition_id" {
   default     = null
 }
 
-variable "assignments" {
-  description = "A list of policies to assign to scope."
+variable "management_group_assignments" {
+  description = "A list of policies to assign to management group"
+  type = list(object({
+    display_name        = string
+    management_group_id = string
+    not_scopes          = list(string)
+    parameters          = string
+  }))
+  default = []
+}
+
+variable "resource_group_assignments" {
+  description = "A list of policies to assign to resource group."
+  type = list(object({
+    display_name      = string
+    resource_group_id = string
+    not_scopes        = list(string)
+    parameters        = string
+  }))
+  default = []
+}
+
+variable "resource_assignments" {
+  description = "A list of policies to assign to resource."
   type = list(object({
     display_name = string
-    scope        = string
+    resource_id  = string
     not_scopes   = list(string)
     parameters   = string
   }))
+  default = []
 }
+
+variable "subscription_assignments" {
+  description = "A list of policies to assign to subscription."
+  type = list(object({
+    display_name    = string
+    subscription_id = string
+    not_scopes      = list(string)
+    parameters      = string
+  }))
+  default = []
+}
+

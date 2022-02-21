@@ -1,15 +1,15 @@
 module "custom" {
   source = "../../"
 
-  name                  = "restrict-location"
-  description           = "Restrict location that its allowed to create resources in."
-  location              = "westeurope"
+  name        = "restrict-location"
+  description = "Restrict location that its allowed to create resources in."
+  location    = "westeurope"
 
   custom_policy = {
     display_name = "Restrict location"
     mode         = "All"
 
-    management_group_name = null
+    management_group_id = null
 
     metadata = <<METADATA
             {
@@ -45,12 +45,12 @@ module "custom" {
         PARAMETERS
   }
 
-  assignments = [
+  subscription_assignments = [
     {
-      display_name = "Restrict resource location"
-      scope        = "/SCOPE"
-      not_scopes   = []
-      parameters   = <<PARAMETERS
+      display_name    = "Restrict resource location"
+      subscription_id = "/subscription/...."
+      not_scopes      = []
+      parameters      = <<PARAMETERS
                 {
                     "allowedLocations": {
                         "value": [ "West Europe" ]
