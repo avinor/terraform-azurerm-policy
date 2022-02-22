@@ -13,6 +13,11 @@ provider "azurerm" {
 
 locals {
   definition_id = var.custom_policy != null ? azurerm_policy_definition.policy.0.id : var.policy_definition_id
+
+  management_group_assignments = [for a in var.assignments : a if length(regexall("^(?i)/providers/Microsoft.Management/managementGroups/", a.id)) == 1]
+  resource_assignments         = [for a in var.assignments : a if length(regexall("^(?i)/subscriptions/[0-9a-f-]+/resourceGroups/\\w/", a.id)) == 1]
+  resource_group_assignments   = [for a in var.assignments : a if length(regexall("^(?i)/subscriptions/[0-9a-f-]+/resourceGroups/[^/]+$", a.id)) == 1]
+  subscription_assignments     = [for a in var.assignments : a if length(regexall("^(?i)/subscriptions/[^/]+$", a.id)) == 1]
 }
 
 resource "azurerm_policy_definition" "policy" {
@@ -38,12 +43,12 @@ resource "azurerm_policy_definition" "policy" {
 
 
 resource "azurerm_management_group_policy_assignment" "policy" {
-  count                = length(var.management_group_assignments)
+  count                = length(local.management_group_assignments)
   name                 = "${var.name}-${count.index}"
-  management_group_id  = var.management_group_assignments[count.index].management_group_id
+  management_group_id  = local.management_group_assignments[count.index].id
   policy_definition_id = local.definition_id
   description          = var.description
-  display_name         = var.management_group_assignments[count.index].display_name
+  display_name         = local.management_group_assignments[count.index].display_name
   location             = var.location
 
   dynamic "identity" {
@@ -53,17 +58,17 @@ resource "azurerm_management_group_policy_assignment" "policy" {
     }
   }
 
-  not_scopes = var.management_group_assignments[count.index].not_scopes
-  parameters = var.management_group_assignments[count.index].parameters
+  not_scopes = local.management_group_assignments[count.index].not_scopes
+  parameters = local.management_group_assignments[count.index].parameters
 }
 
 resource "azurerm_resource_group_policy_assignment" "policy" {
-  count                = length(var.resource_group_assignments)
+  count                = length(local.resource_group_assignments)
   name                 = "${var.name}-${count.index}"
-  resource_group_id    = var.resource_group_assignments[count.index].resource_group_id
+  resource_group_id    = local.resource_group_assignments[count.index].id
   policy_definition_id = local.definition_id
   description          = var.description
-  display_name         = var.resource_group_assignments[count.index].display_name
+  display_name         = local.resource_group_assignments[count.index].display_name
   location             = var.location
 
   dynamic "identity" {
@@ -73,18 +78,18 @@ resource "azurerm_resource_group_policy_assignment" "policy" {
     }
   }
 
-  not_scopes = var.resource_group_assignments[count.index].not_scopes
-  parameters = var.resource_group_assignments[count.index].parameters
+  not_scopes = local.resource_group_assignments[count.index].not_scopes
+  parameters = local.resource_group_assignments[count.index].parameters
 }
-
+#
 resource "azurerm_resource_policy_assignment" "policy" {
-  count                = length(var.resource_assignments)
-  name                 = "${var.name}-${count.index}"
-  resource_id          = var.resource_assignments[count.index].resource_id
-  policy_definition_id = local.definition_id
-  description          = var.description
-  display_name         = var.resource_assignments[count.index].display_name
-  location             = var.location
+  count                  = length(local.resource_assignments)
+  name                   = "${var.name}-${count.index}"
+  resource_id            = local.resource_assignments[count.index].id
+  policy_definition_id   = local.definition_id
+  description            = var.description
+  display_name           = local.resource_assignments[count.index].display_name
+  location               = var.location
 
   dynamic "identity" {
     for_each = var.create_identity ? [1] : []
@@ -93,17 +98,17 @@ resource "azurerm_resource_policy_assignment" "policy" {
     }
   }
 
-  not_scopes = var.resource_assignments[count.index].not_scopes
-  parameters = var.resource_assignments[count.index].parameters
+  not_scopes = local.resource_assignments[count.index].not_scopes
+  parameters = local.resource_assignments[count.index].parameters
 }
 
 resource "azurerm_subscription_policy_assignment" "policy" {
-  count                = length(var.subscription_assignments)
+  count                = length(local.subscription_assignments)
   name                 = "${var.name}-${count.index}"
-  subscription_id      = var.subscription_assignments[count.index].subscription_id
+  subscription_id      = local.subscription_assignments[count.index].id
   policy_definition_id = local.definition_id
   description          = var.description
-  display_name         = var.subscription_assignments[count.index].display_name
+  display_name         = local.subscription_assignments[count.index].display_name
   location             = var.location
 
   dynamic "identity" {
@@ -113,6 +118,6 @@ resource "azurerm_subscription_policy_assignment" "policy" {
     }
   }
 
-  not_scopes = var.subscription_assignments[count.index].not_scopes
-  parameters = var.subscription_assignments[count.index].parameters
+  not_scopes = local.subscription_assignments[count.index].not_scopes
+  parameters = local.subscription_assignments[count.index].parameters
 }

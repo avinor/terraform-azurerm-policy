@@ -45,10 +45,10 @@ module "custom" {
     PARAMETERS
   }
 
-  subscription_assignments = [
+  assignments = [
     {
       display_name    = "Restrict resource location"
-      subscription_id = "/subscriptions/00000000-0000-0000-0000-000000000000"
+      id = "/subscriptions/00000000-0000-0000-0000-000000000000"
       not_scopes      = []
       parameters      = <<PARAMETERS
         {

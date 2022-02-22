@@ -34,47 +34,12 @@ variable "policy_definition_id" {
   default     = null
 }
 
-variable "management_group_assignments" {
+variable "assignments" {
   description = "A list of policies to assign to management group"
   type = list(object({
-    display_name        = string
-    management_group_id = string
-    not_scopes          = list(string)
-    parameters          = string
-  }))
-  default = []
-}
-
-variable "resource_group_assignments" {
-  description = "A list of policies to assign to resource group."
-  type = list(object({
-    display_name      = string
-    resource_group_id = string
-    not_scopes        = list(string)
-    parameters        = string
-  }))
-  default = []
-}
-
-variable "resource_assignments" {
-  description = "A list of policies to assign to resource."
-  type = list(object({
     display_name = string
-    resource_id  = string
+    id           = string
     not_scopes   = list(string)
     parameters   = string
   }))
-  default = []
 }
-
-variable "subscription_assignments" {
-  description = "A list of policies to assign to subscription."
-  type = list(object({
-    display_name    = string
-    subscription_id = string
-    not_scopes      = list(string)
-    parameters      = string
-  }))
-  default = []
-}
-
