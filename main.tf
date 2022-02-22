@@ -46,8 +46,11 @@ resource "azurerm_management_group_policy_assignment" "policy" {
   display_name         = var.management_group_assignments[count.index].display_name
   location             = var.location
 
-  identity {
-    type = var.create_identity ? "SystemAssigned" : "None"
+  dynamic "identity" {
+    for_each = var.create_identity ? [1] : []
+    content {
+      type = "SystemAssigned"
+    }
   }
 
   not_scopes = var.management_group_assignments[count.index].not_scopes
@@ -63,8 +66,11 @@ resource "azurerm_resource_group_policy_assignment" "policy" {
   display_name         = var.resource_group_assignments[count.index].display_name
   location             = var.location
 
-  identity {
-    type = var.create_identity ? "SystemAssigned" : "None"
+  dynamic "identity" {
+    for_each = var.create_identity ? [1] : []
+    content {
+      type = "SystemAssigned"
+    }
   }
 
   not_scopes = var.resource_group_assignments[count.index].not_scopes
@@ -80,8 +86,11 @@ resource "azurerm_resource_policy_assignment" "policy" {
   display_name         = var.resource_assignments[count.index].display_name
   location             = var.location
 
-  identity {
-    type = var.create_identity ? "SystemAssigned" : "None"
+  dynamic "identity" {
+    for_each = var.create_identity ? [1] : []
+    content {
+      type = "SystemAssigned"
+    }
   }
 
   not_scopes = var.resource_assignments[count.index].not_scopes
@@ -97,8 +106,11 @@ resource "azurerm_subscription_policy_assignment" "policy" {
   display_name         = var.subscription_assignments[count.index].display_name
   location             = var.location
 
-  identity {
-    type = var.create_identity ? "SystemAssigned" : "None"
+  dynamic "identity" {
+    for_each = var.create_identity ? [1] : []
+    content {
+      type = "SystemAssigned"
+    }
   }
 
   not_scopes = var.subscription_assignments[count.index].not_scopes
