@@ -35,7 +35,7 @@ variable "policy_definition_id" {
 }
 
 variable "assignments" {
-  description = "A list of policies to assign to management group"
+  description = "A list of policies to assign to resource id"
   type = list(object({
     display_name = string
     id           = string
