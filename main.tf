@@ -15,7 +15,7 @@ locals {
   definition_id = var.custom_policy != null ? azurerm_policy_definition.policy.0.id : var.policy_definition_id
 
   management_group_assignments = [for a in var.assignments : a if length(regexall("^(?i)/providers/Microsoft.Management/managementGroups/", a.id)) == 1]
-  resource_assignments         = [for a in var.assignments : a if length(regexall("^(?i)/subscriptions/[0-9a-f-]+/resourceGroups/\\w/", a.id)) == 1]
+  resource_assignments         = [for a in var.assignments : a if length(regexall("^(?i)/subscriptions/[0-9a-f-]+/resourceGroups/\\w+/", a.id)) == 1]
   resource_group_assignments   = [for a in var.assignments : a if length(regexall("^(?i)/subscriptions/[0-9a-f-]+/resourceGroups/[^/]+$", a.id)) == 1]
   subscription_assignments     = [for a in var.assignments : a if length(regexall("^(?i)/subscriptions/[^/]+$", a.id)) == 1]
 }
