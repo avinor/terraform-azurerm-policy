@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.97.0"
+      version = "~> 2.99.0"
     }
   }
 }
@@ -83,13 +83,13 @@ resource "azurerm_resource_group_policy_assignment" "policy" {
 }
 #
 resource "azurerm_resource_policy_assignment" "policy" {
-  count                  = length(local.resource_assignments)
-  name                   = "${var.name}-${count.index}"
-  resource_id            = local.resource_assignments[count.index].id
-  policy_definition_id   = local.definition_id
-  description            = var.description
-  display_name           = local.resource_assignments[count.index].display_name
-  location               = var.location
+  count                = length(local.resource_assignments)
+  name                 = "${var.name}-${count.index}"
+  resource_id          = local.resource_assignments[count.index].id
+  policy_definition_id = local.definition_id
+  description          = var.description
+  display_name         = local.resource_assignments[count.index].display_name
+  location             = var.location
 
   dynamic "identity" {
     for_each = var.create_identity ? [1] : []
