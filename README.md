@@ -2,7 +2,18 @@
 
 Terraform module to create policies and apply them to different scopes. It can either create a new policy and assign, or use an existing policy definition.
 
-If applying policies to management groups the scope should be set to `/providers/Microsoft.Management/managementGroups/group_id`.
+If applying policies to management groups the id should be set to `/providers/Microsoft.Management/managementGroups/group_id`.
+
+Assignments id is mapped to azurerm provider resources as follows:
+
+| id                                                                             | azurerm resource                           |
+|--------------------------------------------------------------------------------|--------------------------------------------|
+| /providers/Microsoft.Management/managementGroups/...                           | azurerm_management_group_policy_assignment |
+| /subscriptions/00000000-0000-0000-0000-000000000000                            | azurerm_subscription_policy_assignment     |
+| /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mygroup     | azurerm_resource_group_policy_assignment   |
+| /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mygroup/... | azurerm_resource_policy_assignment         |
+
+Assigments to different resource types is supported.
 
 ## Required parameters
 
@@ -10,17 +21,13 @@ Although both `policy_definition_id` and `custom_policy` are optionally at least
 
 ## Usage
 
-All examples use [tau](https://github.com/avinor/tau) for deployment.
-
 To use the build-in policy to restrict resource locations to specific regions:
 
 ```terraform
-module {
+module "restrict-location" {
     source = "avinor/policy/azurerm"
     version = "1.1.0"
-}
 
-inputs {
     name        = "restrict-location"
     description = "Restrict location that its allowed to create resources in."
     location    = "westeurope"
@@ -30,7 +37,7 @@ inputs {
     assignments = [
         {
             display_name = "Restrict resource location"
-            scope        = "/SCOPE"
+            id           = "/providers/Microsoft.Management/managementGroups/group_id"
             not_scopes   = []
             parameters   = <<PARAMETERS
                 {
@@ -47,20 +54,18 @@ inputs {
 If the build-in policies do not cover use case it is also possible to add a custom policy:
 
 ```terraform
-module {
+module "restrict-location" {
     source = "avinor/policy/azurerm"
     version = "2.0.0"
-}
 
-inputs {
     name = "restrict-location"
     description = "Restrict location that its allowed to create resources in."
     location = "westeurope"
 
     custom_policy = {
-        display_name          = "Restrict location"
-        mode                  = "All"
-        management_group_name = ""
+        display_name        = "Restrict location"
+        mode                = "All"
+        management_group_id = ""
 
         metadata = <<METADATA
             {
@@ -99,7 +104,7 @@ inputs {
     assignments = [
         {
             display_name = "Restrict resource location"
-            scope        = "/SCOPE"
+            id           = "/providers/Microsoft.Management/managementGroups/group_id"
             not_scopes   = []
             parameters   = <<PARAMETERS
                 {

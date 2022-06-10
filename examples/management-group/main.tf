@@ -6,12 +6,11 @@ module "existing" {
   location    = "westeurope"
 
   policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c"
-  create_identity      = true
 
   assignments = [
     {
       display_name      = "Restrict resource location"
-      id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mygroup"
+      id = "/providers/Microsoft.Management/managementGroups/root_mgm_grp"
       not_scopes        = []
       parameters        = <<PARAMETERS
         {
