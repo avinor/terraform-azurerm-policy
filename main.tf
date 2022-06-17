@@ -41,7 +41,6 @@ resource "azurerm_policy_definition" "policy" {
   }
 }
 
-
 resource "azurerm_management_group_policy_assignment" "policy" {
   count                = length(local.management_group_assignments)
   name                 = "${var.name}-${count.index}"
@@ -60,6 +59,15 @@ resource "azurerm_management_group_policy_assignment" "policy" {
 
   not_scopes = local.management_group_assignments[count.index].not_scopes
   parameters = local.management_group_assignments[count.index].parameters
+}
+
+resource "azurerm_management_group_policy_exemption" "policy" {
+  for_each                        = local.management_group_assignments.exemption != null
+  name                            = local.management_group_assignments[each.value].exemption.name
+  management_group_id             = local.management_group_assignments[each.value].id
+  policy_assignment_id            = azurerm_management_group_policy_assignment.policy[each.value].id
+  exemption_category              = local.management_group_assignments[each.value].exemption.exemption_category
+  policy_definition_reference_ids = local.management_group_assignments[each.value].exemption.policy_definition_reference_ids
 }
 
 resource "azurerm_resource_group_policy_assignment" "policy" {
