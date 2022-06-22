@@ -23,7 +23,6 @@ module "policy-set-definitions" {
         name                            = "extemption-1"
         exemption_category              = "Waiver"
         policy_definition_reference_ids = ["identityEnableMFAForWritePermissionsMonitoring"]
-
       }
     }
   ]

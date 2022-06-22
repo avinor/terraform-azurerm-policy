@@ -43,7 +43,7 @@ module "custom" {
         }
       }
     PARAMETERS
-    exemption    = null
+    exemption  = null
   }
 
   assignments = [
