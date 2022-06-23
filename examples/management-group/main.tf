@@ -1,4 +1,4 @@
-module "existing" {
+module "management-group" {
   source = "../../"
 
   name        = "restrict-location"
@@ -9,16 +9,17 @@ module "existing" {
 
   assignments = [
     {
-      display_name      = "Restrict resource location"
-      id = "/providers/Microsoft.Management/managementGroups/root_mgm_grp"
-      not_scopes        = []
-      parameters        = <<PARAMETERS
+      display_name = "Restrict resource location"
+      id           = "/providers/Microsoft.Management/managementGroups/root_mgm_grp"
+      not_scopes   = []
+      parameters   = <<PARAMETERS
         {
           "listOfAllowedLocations": {
             "value": [ "West Europe" ]
           }
         }
       PARAMETERS
+      exemption    = null
     },
   ]
 }

@@ -10,16 +10,17 @@ module "existing" {
 
   assignments = [
     {
-      display_name      = "Restrict resource location"
-      id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mygroup"
-      not_scopes        = []
-      parameters        = <<PARAMETERS
+      display_name = "Restrict resource location"
+      id           = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mygroup"
+      not_scopes   = []
+      parameters   = <<PARAMETERS
         {
           "listOfAllowedLocations": {
             "value": [ "West Europe" ]
           }
         }
       PARAMETERS
+      exemption    = null
     },
   ]
 }

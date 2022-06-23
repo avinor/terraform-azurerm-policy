@@ -41,5 +41,10 @@ variable "assignments" {
     id           = string
     not_scopes   = list(string)
     parameters   = string
+    exemption = object({
+      name                            = string
+      exemption_category              = string
+      policy_definition_reference_ids = list(string)
+    })
   }))
 }
