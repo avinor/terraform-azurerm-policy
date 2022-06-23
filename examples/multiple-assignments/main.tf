@@ -24,6 +24,19 @@ module "policy-set-definitions" {
         exemption_category              = "Waiver"
         policy_definition_reference_ids = ["identityEnableMFAForWritePermissionsMonitoring"]
       }
+    },
+    {
+      display_name = "Second assignment for test"
+      id           = "/providers/Microsoft.Management/managementGroups/test_mgm_grp"
+      not_scopes   = []
+      parameters   = <<PARAMETERS
+                {
+                    "allowedContainerImagesInKubernetesClusterRegex": {
+                        "value": "^avinorregistry+\\.azurecr\\.io\\/.+$"
+                    }
+                }
+            PARAMETERS
+      exemption    = null
     }
   ]
 }

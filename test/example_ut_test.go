@@ -14,6 +14,7 @@ func TestUT_Examples(t *testing.T) {
 		"../examples/existing",
 		"../examples/management-group",
 		"../examples/policy-set-definitions",
+		"../examples/multiple-assignments",
 	}
 
 	for _, test := range tests {
