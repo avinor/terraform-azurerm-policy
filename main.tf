@@ -69,6 +69,7 @@ resource "azurerm_management_group_policy_assignment" "policy" {
 resource "azurerm_management_group_policy_exemption" "policy" {
   count                           = length(local.management_group_assignments_exemptions)
   name                            = local.management_group_assignments_exemptions[count.index].exemption.name
+  display_name                    = local.management_group_assignments_exemptions[count.index].exemption.display_name
   management_group_id             = local.management_group_assignments_exemptions[count.index].id
   policy_assignment_id            = azurerm_management_group_policy_assignment.policy[count.index].id
   exemption_category              = local.management_group_assignments_exemptions[count.index].exemption.exemption_category
@@ -98,6 +99,7 @@ resource "azurerm_resource_group_policy_assignment" "policy" {
 resource "azurerm_resource_group_policy_exemption" "policy" {
   count                           = length(local.resource_group_assignments_exemptions)
   name                            = local.resource_group_assignments_exemptions[count.index].exemption.name
+  display_name                    = local.resource_group_assignments_exemptions[count.index].exemption.display_name
   resource_group_id               = local.resource_group_assignments_exemptions[count.index].id
   policy_assignment_id            = azurerm_resource_group_policy_assignment.policy[count.index].id
   exemption_category              = local.resource_group_assignments_exemptions[count.index].exemption.exemption_category
@@ -127,6 +129,7 @@ resource "azurerm_resource_policy_assignment" "policy" {
 resource "azurerm_resource_policy_exemption" "policy" {
   count                           = length(local.resource_assignments_exemptions)
   name                            = local.resource_assignments_exemptions[count.index].exemption.name
+  display_name                    = local.resource_assignments_exemptions[count.index].exemption.display_name
   resource_id                     = local.resource_assignments_exemptions[count.index].id
   policy_assignment_id            = azurerm_resource_policy_assignment.policy[count.index].id
   exemption_category              = local.resource_assignments_exemptions[count.index].exemption.exemption_category
@@ -156,6 +159,7 @@ resource "azurerm_subscription_policy_assignment" "policy" {
 resource "azurerm_subscription_policy_exemption" "policy" {
   count                           = length(local.subscription_assignments_exemptions)
   name                            = local.subscription_assignments_exemptions[count.index].exemption.name
+  display_name                    = local.subscription_assignments_exemptions[count.index].exemption.display_name
   subscription_id                 = local.subscription_assignments_exemptions[count.index].id
   policy_assignment_id            = azurerm_subscription_policy_assignment.policy[count.index].id
   exemption_category              = local.subscription_assignments_exemptions[count.index].exemption.exemption_category
