@@ -46,6 +46,12 @@ module "restrict-location" {
                     }
                 }
             PARAMETERS
+            exemption    = {
+               name                            = "exemption-1"
+               display_name                    = "Exemptio One"
+               exemption_category              = "Waiver"
+               policy_definition_reference_ids = ["identityEnableMFAForWritePermissionsMonitoring"]
+          }
         },
     ]
 }
@@ -99,6 +105,7 @@ module "restrict-location" {
                 }
             }
         PARAMETERS
+        exemption = null
     }
 
     assignments = [
@@ -113,6 +120,7 @@ module "restrict-location" {
                     }
                 }
             PARAMETERS
+            exemption = null
         },
     ]
 }
