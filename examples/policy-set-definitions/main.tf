@@ -21,8 +21,13 @@ module "policy-set-definitions" {
             PARAMETERS
       exemption = {
         name                            = "exemption-1"
+        display_name                    = "MFA should be enabled on accounts with read/write/owner permissions on your subscription"
         exemption_category              = "Waiver"
-        policy_definition_reference_ids = ["identityEnableMFAForWritePermissionsMonitoring"]
+        policy_definition_reference_ids = [
+          "identityEnableMFAForReadPermissionsMonitoring",
+          "identityEnableMFAForWritePermissionsMonitoring",
+          "identityEnableMFAForOwnerPermissionsMonitoring",
+        ]
       }
     }
   ]

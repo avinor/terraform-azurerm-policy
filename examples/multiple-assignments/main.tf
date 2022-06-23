@@ -21,11 +21,13 @@ module "policy-set-definitions" {
             PARAMETERS
       exemption = {
         name                            = "exemption-1"
+        display_name                    = "Exemptio One"
         exemption_category              = "Waiver"
         policy_definition_reference_ids = ["identityEnableMFAForWritePermissionsMonitoring"]
       }
     },
     {
+      name         = "second-assignment-test"
       display_name = "Second assignment for test"
       id           = "/providers/Microsoft.Management/managementGroups/test_mgm_grp"
       not_scopes   = []
