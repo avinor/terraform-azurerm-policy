@@ -10,10 +10,10 @@ func TestUT_Examples(t *testing.T) {
 	t.Parallel()
 
 	tests := []string{
-		"../examples/custom",
-		"../examples/existing",
-		"../examples/management-group",
-		"../examples/policy-set-definitions",
+		//"../examples/custom",
+		//"../examples/existing",
+		//"../examples/management-group",
+		//"../examples/policy-set-definitions",
 		"../examples/multiple-assignments",
 	}
 
