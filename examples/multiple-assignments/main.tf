@@ -21,7 +21,7 @@ module "policy-set-definitions" {
             PARAMETERS
       exemption = {
         name                            = "exemption-1"
-        display_name                    = "Exemptio One"
+        display_name                    = "Exemption One"
         exemption_category              = "Waiver"
         policy_definition_reference_ids = ["identityEnableMFAForWritePermissionsMonitoring"]
       }
@@ -39,6 +39,25 @@ module "policy-set-definitions" {
                 }
             PARAMETERS
       exemption    = null
+    },
+    {
+      name         = "third-assignment-shared"
+      display_name = "Third assignment for shared"
+      id           = "/providers/Microsoft.Management/managementGroups/shared_mgm_grp"
+      not_scopes   = []
+      parameters   = <<PARAMETERS
+                {
+                    "allowedContainerImagesInKubernetesClusterRegex": {
+                        "value": "^avinorregistry+\\.azurecr\\.io\\/.+$"
+                    }
+                }
+            PARAMETERS
+      exemption = {
+        name                            = "exemption-2"
+        display_name                    = "Exemption Two"
+        exemption_category              = "Waiver"
+        policy_definition_reference_ids = ["identityEnableMFAForWritePermissionsMonitoring"]
+      }
     }
   ]
 }
